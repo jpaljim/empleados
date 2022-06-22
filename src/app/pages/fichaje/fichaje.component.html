@@ -1,0 +1,57 @@
+<!-- En caso de que no haya fichado ni entrada ni salida -->
+<div class="botones" *ngIf="estadoFichaje === 0">
+  <button type="button" (click)="startScan()" class="btn btn-lg btn-rounded btn-success">
+    Entrada
+  </button>
+
+  
+</div>
+
+<!-- En caso de que el empleado haya fichado solo la entrada y no la salida -->
+<div class="botones" *ngIf="estadoFichaje === 1 || estadoFichaje === 3">
+  <button
+    [disabled]="estadoFichaje === 3"
+    (click)="startScan()"
+    type="button"
+    [ngClass]="{
+      disabled: estadoFichaje === 3,
+      'btn btn-lg btn-rounded btn-success': true
+    }"
+  >
+    Salida
+  </button>
+</div>
+
+<!-- En caso de que ya haya terminado la jornada laboral -->
+<div *ngIf="estadoFichaje === 2">
+  <h1 style="text-align: center">¡Has terminado de trabajar!</h1>
+</div>
+
+<br>
+<br>
+
+<!-- Shows our camera stream -->
+<video #video [hidden]="!scanActive" width="100%"></video>
+
+<!-- Used to render the camera stream images -->
+<canvas #canvas hidden></canvas>
+
+<!-- Stop our scanner preview if active -->
+<ion-button
+  expand="full"
+  (click)="stopScan()"
+  color="danger"
+  *ngIf="scanActive"
+>
+  <ion-icon slot="start" name="close"></ion-icon>
+  Parar escaner
+</ion-button>
+
+<!-- <ion-card *ngIf="scanResult">
+  <ion-card-header>
+    <ion-card-title>QR Code</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    {{ scanResult }}
+  </ion-card-content>
+</ion-card> -->
